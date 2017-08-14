@@ -102,6 +102,10 @@ TODO
 
 TODO
 
+## Contributing
+
+Feel free to contribute, comment and share this guide.
+
 ## License
 
     Copyright 2017 Markus Frosch <markus@lazyfrosch.de>
