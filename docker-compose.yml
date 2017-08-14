@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  registry:
+    image: registry:2
+    volumes:
+    - data:/registry
+    ports:
+    - 5000:5000
+    environment:
+    - REGISTRY_LOG_LEVEL=info
+    - REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY=/registry
+
+  cleanup:
+    image: registry:2-cleanup
+    build: cleanup/
+    volumes:
+    - data:/registry
+    ports:
+    - 5000:5000
+    environment:
+    - REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY=/registry
+
+volumes:
+  data:
