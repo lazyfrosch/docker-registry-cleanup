@@ -26,9 +26,34 @@ Other requirements:
 
 ## How it works
 
-TODO
+On running the `cleanup` container, the following happens.
 
-## How to use
+
+* Docker will execute the `cleanup.py` entrypoint
+* A read-only registry is started in background (so users can pull data)
+* The script indexes images, tags and layers
+* Using `delete_docker_registry_image --untagged -i <repo>` any non referenced layer is removed from the repositories
+  (This will only keep the tags and their current layers - all "history" is removed)
+* `registry garbage-collect` will be run to clean up all dangling blobs (the real data behind all layers)
+* Giving you a summary about how much data remains in the repository
+
+For technical details, see the [cleanup container](cleanup/), its [Dockerfile](cleanup/Dockerfile) and the [cleanup script](cleanup/cleanup.py).
+
+To make that clear, this tool is meant to remove unused and non-visible data from your Docker registry.
+
+Every repository contains layers of previous pushes, and the blob data behind it stays through
+`garbage-collect` as long it is referenced by a layer.
+
+## What it should not do
+
+I use *should*, because that is what it is intended and has been tested for in my environments.
+
+BACKUP YOUR DATA before trying it out! You have been warned!
+
+* This example should NOT remove repositories and existing tags
+* This example should NOT remove data you can access from the Frontend API (docker pull and REST API)
+
+## How to use / test this tool
 
 This repository contains an example to be run on a local Docker test setup.
 
@@ -95,10 +120,6 @@ To remove the test containers (and data in volumes):
     docker-compose down -v
 
 ## How to use in production
-
-TODO
-
-## Noise Generation
 
 TODO
 
