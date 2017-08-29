@@ -8,8 +8,6 @@ to remove repositories and tags, there is no good way to remove old layers and u
 
 We also want to show how to run this regularly, without the cleanup being a major manual work.
 
-**Warning:** This is an experiment, we are not running this in production as of now.
-
 **Disclaimer:** Always backup your data, never use this scripts without testing. Read the license below first!
 
 ## Used tools
