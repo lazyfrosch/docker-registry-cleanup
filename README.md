@@ -1,7 +1,7 @@
 Docker Registry Cleanup
 =======================
 
-This is an **example** repository on how to clean up a Docker registry / distribution software.
+This repository shows you how to clean up a Docker registry / distribution software data storage.
 
 Docker registries tend to hog the disk with no longer used layers and images. While there is a way
 to remove repositories and tags, there is no good way to remove old layers and untagged images.
@@ -28,7 +28,6 @@ Other requirements:
 
 On running the `cleanup` container, the following happens.
 
-
 * Docker will execute the `cleanup.py` entrypoint
 * A read-only registry is started in background (so users can pull data)
 * The script indexes images, tags and layers
@@ -50,12 +49,12 @@ I use *should*, because that is what it is intended and has been tested for in m
 
 BACKUP YOUR DATA before trying it out! You have been warned!
 
-* This example should NOT remove repositories and existing tags
-* This example should NOT remove data you can access from the Frontend API (docker pull and REST API)
+* This method should NOT remove repositories and existing tags
+* This method should NOT remove data you can access from the frontend API (docker pull and REST API)
 
 ## How to use / test this tool
 
-This repository contains an example to be run on a local Docker test setup.
+Here is a quick guide how to use this method.
 
 **1. Build the registry container with cleanup extensions**
 
@@ -121,7 +120,31 @@ To remove the test containers (and data in volumes):
 
 ## How to use in production
 
-TODO
+This method works in production fine from my perspective. Below the summary of an initial cleanup
+after months of pushing production data to a registry.
+
+```
+[ Data summary : Before cleanup ]
+Number of repositories: 119
+Number of tags: 186
+Number of layers: 1268
+Number of blobs: 14327
+Total size of blobs: 197.7GiB
+
+[ Data summary : After cleanup ]
+Number of layers: 131
+Number of blobs: 1397
+Total size of blobs: 28.5GiB
+```
+
+Basically all you need to do is to run a regular script that does:
+
+``` bash
+docker-compose stop registry   # stop the live registry
+docker-compose up cleanup      # takes up to a few minutes - depending on size
+docker-compose stop cleanup    # ensure its stopped
+docker-compose up -d registry  # bring back up the live registry (read-write)
+```
 
 ## Contributing
 
