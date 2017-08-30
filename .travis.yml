@@ -1,0 +1,21 @@
+sudo: required
+language: docker
+
+services:
+- docker
+
+branches:
+  only:
+  - master
+  - /^v\d/
+
+before_install:
+- docker ps -a
+- docker images
+
+script:
+- ./test.sh
+
+after_script:
+- docker ps -a
+- docker images
