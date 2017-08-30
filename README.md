@@ -1,6 +1,8 @@
 Docker Registry Cleanup
 =======================
 
+[![Build Status](https://travis-ci.org/lazyfrosch/docker-registry-cleanup.svg?branch=master)](https://travis-ci.org/lazyfrosch/docker-registry-cleanup)
+
 This repository shows you how to clean up a Docker registry / distribution software data storage.
 
 Docker registries tend to hog the disk with no longer used layers and images. While there is a way
@@ -143,6 +145,16 @@ docker-compose up cleanup      # takes up to a few minutes - depending on size
 docker-compose stop cleanup    # ensure its stopped
 docker-compose up -d registry  # bring back up the live registry (read-write)
 ```
+
+## Testing
+
+Please see [test.sh](test.sh) and the [test directory](test/) for some scripts regarding testing.
+
+Currently tested:
+
+* Running the registry and cleanup empty
+* Multiple image builds and cleanup
+* Cross-building over dependent images, with cleanup
 
 ## Contributing
 
