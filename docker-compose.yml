@@ -12,7 +12,7 @@ services:
     - REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY=/registry
 
   cleanup:
-    image: registry:2-cleanup
+    image: lazyfrosch/registry-cleanup
     build: cleanup/
     volumes:
     - data:/registry
