@@ -64,7 +64,7 @@ This will build the image, check [cleanup directory](cleanup/) for scripts and i
 
 **2. Bring up the test registry***
 
-    docker-composer up -d registry
+    docker-compose up -d registry
 
 **3. Generate some noise (random images)**
 
